@@ -13,12 +13,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var tableView: UITableView!
     
     var emojis = ["😇","😎","😈","☠️","💋","👖","🕵️"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         tableView.dataSource = self
         tableView.delegate = self
+        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
     }
     
@@ -27,9 +30,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        //let cell = UITableViewCell()
+        
+        var cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
+        if cell == nil {
+            cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+        }
+        
         cell.textLabel?.text = emojis[indexPath.row]
         return cell
+
+        
     }
     
     override func didReceiveMemoryWarning() {
